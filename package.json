@@ -1,6 +1,6 @@
 {
   "name": "@codexcentral/check-format-password",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Function to check the format of a password",
   "license": "Apache-2.0",
   "main": "./dist/cjs/index.js",

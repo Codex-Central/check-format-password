@@ -31,20 +31,28 @@ const checkFormatPassword = (password: string, config: TConfig) => {
     messages.push(config.length?.max.message || "Password is too long.");
   }
 
-  if(config.string?.allow === false && /[a-zA-Z]/.test(password)) {
+  if (config.string?.allow === false && /[a-zA-Z]/.test(password)) {
     messages.push(
       config.string?.message || "Password must not contain any letters."
     );
   }
 
-  if (config.string?.allow !== false && config.string?.upperCase.allow !== false && !/[A-Z]/.test(password)) {
+  if (
+    config.string?.allow !== false &&
+    config.string?.upperCase.allow !== false &&
+    !/[A-Z]/.test(password)
+  ) {
     messages.push(
       config.string?.upperCase.message ||
         "Password must contain at least one uppercase letter."
     );
   }
 
-  if (config.string?.allow !== false && config.string?.lowerCase.allow !== false && !/[a-z]/.test(password)) {
+  if (
+    config.string?.allow !== false &&
+    config.string?.lowerCase.allow !== false &&
+    !/[a-z]/.test(password)
+  ) {
     messages.push(
       config.string?.lowerCase.message ||
         "Password must contain at least one lowercase letter."
@@ -57,22 +65,28 @@ const checkFormatPassword = (password: string, config: TConfig) => {
     );
   }
 
-  if(config.number?.allow === false && /\d/.test(password)) {
+  if (config.number?.allow === false && /\d/.test(password)) {
     messages.push(
       config.number?.message || "Password must not contain any numbers."
     );
   }
 
-  if (config.specialChar?.allow !== false && !/[\\W_]/.test(password)) {
+  const specialChars = "!@#$%^&*()_+{}[]:;<>,.?~\\-=|\\/"; // Define special characters
+  const hasSpecialChar = [...password].some((char) =>
+    specialChars.includes(char)
+  );
+
+  if (config.specialChar?.allow !== false && !hasSpecialChar) {
     messages.push(
       config.specialChar?.message ||
         "Password must contain at least one special character."
     );
   }
 
-  if(config.specialChar?.allow === false && /[\\W_]/.test(password)) {
+  if (config.specialChar?.allow === false && hasSpecialChar) {
     messages.push(
-      config.specialChar?.message || "Password must not contain any special characters."
+      config.specialChar?.message ||
+        "Password must not contain any special characters."
     );
   }
 
