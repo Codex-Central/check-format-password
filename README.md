@@ -1,39 +1,73 @@
-# <name_of_package>
-Specify the description of your project here...
+# check-format-password
 
+Allow checking password format
 
 ## Installation
 
-> `npm install @codexcentral/<name_of_package>`
+> `npm install @codexcentral/check-format-password`
 
 ## Usage
-### 1. Importing...
+
+### 1. Import the function
 
 ```javascript
-import { MyFunction } from '@codexcentral/<name_of_package>';
+import {
+  checkFormatPassword,
+  TConfig,
+} from "@codexcentral/check-format-password";
 ```
 
-### 2. Call the functions...
+### 2. Call the function
 
+#### Example 1
 
-### Attributes...
+```typescript
+const config: TConfig = {
+  length: {
+    min: {
+      value: 2,
+      message: "Password is too short.",
+    },
+    max: {
+      value: 20,
+      message: "Password is too long.",
+    },
+  }
+};
+const password = "Password123@";
+const result = checkFormatPassword(password, config);
 
-| Attribute | Type | Mandatory |
-| ------ | ------ | ------ |
-|  attribute1 | `string` | true |
-|  attribute2 | `number` | true (100 to 599) |
-|  attribute3 | `array` | false |
-|  attribute4 | `number` | false (default: 1000 - in milliseconds) |
+console.log(result);
+// {
+//   isValid: true,
+//   message: "Password is valid."
+// }
+```
 
-#### Example of Attributes
-```json
-{
-  "attribute1": "/test",
-  "attribute2": 200,
-  "attribute3": [],
-  "attribute4": 5000
-}
+#### Example 2
+
+```typescript
+const config = {
+  number: {
+    allow: true,
+    message: "Password must contain at least one number.",
+  },
+};
+const passwordCheck = "Password@";
+const result = checkFormatPassword(passwordCheck, config);
+
+console.log(result);
+/*
+ {
+  isValid: false,
+  message: [
+       'Password must contain at least one number.',
+       'Password must contain at least one special character.'
+     ]
+ }
+*/
 ```
 
 # Credits
+
 These code was written by [Roberto Silva Z.](https://www.linkedin.com/in/robertosilvazuniga/)
